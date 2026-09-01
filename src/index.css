@@ -3,123 +3,132 @@
 @tailwind utilities;
 
 body {
-    background: #222;
-    color: #fff;
+  background: #222;
+  color: #fff;
 }
 
 .push-btn {
-    position: relative;
-    width: auto;
-    display: inline-block;
-    text-decoration: none;
-    border-radius: 5px;
-    border: solid 1px #2C6961;
-    background: #2C6961;
-    text-align: center;
-    transition: all 0.1s;
-    box-shadow: 0px 6px 0px #2C5852;
+  position: relative;
+  width: auto;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 5px;
+  border: solid 1px #2c6961;
+  background: #2c6961;
+  text-align: center;
+  transition: all 0.1s;
+  box-shadow: 0px 6px 0px #2c5852;
 }
 
 .push-btn:active {
-    box-shadow: 0px 2px 0px #2C5852;
-    position: relative;
-    top: 4px;
+  box-shadow: 0px 2px 0px #2c5852;
+  position: relative;
+  top: 4px;
 }
 
 .chart-container {
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 400px;
-    background-color: rgba(255, 255, 255, 0.055);
+  /* --bar-count is set inline via JS to the current array length, so the
+       layout below reflows automatically for any array size. */
+  --bar-count: 12;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  width: 100%;
+  height: 400px;
+  padding: 0 20px;
+  background-color: rgba(255, 255, 255, 0.055);
 }
 
 .base {
-    position: absolute;
-    bottom: 0;
-    left: -10px;
-    width: 100%;
-    height: 20px;
-    background-color: rgba(255, 255, 255, 0.05);
-    transform: skew(45deg);
+  position: absolute;
+  bottom: 0;
+  left: -10px;
+  width: 100%;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: skew(45deg);
 }
 
+/* Each bar gets an equal fractional share of the chart width, so N bars
+   always fill the same space whether N is 5 or 50. */
 .bar-container {
-    width: 20px;
-    margin: 0 25px;
+  position: relative;
+  flex: 0 0 calc(100% / var(--bar-count));
+  max-width: calc(100% / var(--bar-count));
+  height: 82%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .bar {
-    float: left;
-    position: absolute;
-    bottom: 0;
-    z-index: 10;
-    height: 75%;
-    width: 40px;
+  position: relative;
+  z-index: 10;
+  /* Bar takes most of its slot's width, but never gets absurdly thin or
+       absurdly fat regardless of how many bars are on screen. */
+  width: clamp(6px, 62%, 42px);
+  height: 100%;
 }
 
 .bar:before {
-    content: "";
-    position: absolute;
-    left: -15px;
-    bottom: 7px;
-    height: 100%;
-    width: 15px;
-    transform: skewY(45deg);
+  content: "";
+  position: absolute;
+  left: -38%;
+  bottom: 6px;
+  height: 100%;
+  width: 38%;
+  transform: skewY(45deg);
 }
 
 .bar:after {
-    content: "";
-    position: absolute;
-    top: -15px;
-    left: -8px;
-    width: 40px;
-    height: 15px;
-    transform: skewX(45deg);
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -20%;
+  width: 140%;
+  height: 10px;
+  transform: skewX(45deg);
 }
 
 .bar-idle {
-    background-color: rgba(40, 214, 192, 0.35);
+  background-color: rgba(40, 214, 192, 0.35);
 }
 .bar-idle:before {
-    background-color: rgba(40, 214, 192, 0.25);
+  background-color: rgba(40, 214, 192, 0.25);
 }
 .bar-idle:after {
-    background-color: rgba(40, 214, 192, 0.45);
+  background-color: rgba(40, 214, 192, 0.45);
 }
 
 .bar-selected {
-    background-color: rgba(254, 31, 78, 0.35);
+  background-color: rgba(254, 31, 78, 0.35);
 }
 .bar-selected:before {
-    background-color: rgba(254, 31, 78, 0.25);
+  background-color: rgba(254, 31, 78, 0.25);
 }
 .bar-selected:after {
-    background-color: rgba(254, 31, 78, 0.45);
+  background-color: rgba(254, 31, 78, 0.45);
 }
 
-@media screen and (max-width: 770px) {
-    .bar-container {
-        margin: 0 15px;
-        transform: scaleX(0.6);
-    }
-
-    .bar-container p {
-        transform: scaleY(0.6);
-    }
+/* The value label shrinks as more bars are packed in, and is clipped
+   rather than overflowing its bar once things get tight. */
+.bar p {
+  position: absolute;
+  top: 4px;
+  left: 3px;
+  right: 3px;
+  margin: 0;
+  font-size: clamp(7px, calc(15px - var(--bar-count) * 0.18px), 15px);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 450px) {
-    .chart-container {
-        height: 200px;
-    }
-    
-    .bar-container {
-        margin: 0 3px;
-        transform: scaleX(0.4)
-    }
-
-    .bar-container p {
-        transform: scaleY(0.4);
-    }
+  .chart-container {
+    height: 220px;
+    padding: 0 8px;
+  }
 }
