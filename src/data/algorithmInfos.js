@@ -79,22 +79,6 @@ const algorithmInfos = {
 			Quick sort is known for its efficiency and is often used in practice such as in the V8 JavaScript engine. However, it can have poor performance if the pivot element is poorly chosen or if the input data is already sorted or nearly sorted.
 		`
 	},
-	radix_sort: {
-		name: "Radix Sort",
-		time_complexity: {
-			best: ['O(nk)', 'green-800'],
-			average: ['O(nk)', 'green-800'],
-			worst: ['O(nk)', 'green-800']
-		},
-		space_complexity: ['O(n+k)', 'yellow-600'],
-		description: `
-			Radix Sort is a non-comparative sorting algorithm that sorts elements based on their digits or characters. It works by iterating through each digit or character of the elements and sorting them based on their values at that position. The sorting process is repeated for each digit or character until all elements are sorted.
-
-			Radix Sort can be performed using either the Least Significant Digit (LSD) or Most Significant Digit (MSD) approach. LSD Radix Sort starts by sorting the elements based on their least significant digit, and then moves on to the next digit until all digits have been sorted. MSD Radix Sort, on the other hand, starts by sorting the elements based on their most significant digit, and then moves on to the next digit until all digits have been sorted.
-
-			One of the advantages of Radix Sort is that it has a time complexity of O(nk), where n is the number of elements and k is the number of digits or characters in the elements. This makes it an efficient algorithm for sorting large data sets, especially when the number of digits or characters is small. However, Radix Sort may not be as efficient as some other sorting algorithms for smaller data sets, and it requires additional memory space to store the intermediate results during sorting.
-		`
-	},
 }
 
 export default algorithmInfos
